@@ -1,52 +1,51 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { BiMessageAdd } from "react-icons/bi";
 
 function AddTodo({ onNewItem }) {
-  const [todoName, setTodoName] = useState("");
-  const [dueDate, setDueDate] = useState("");
+ 
 
-  const handleNameChange = (event) => {
-    setTodoName(event.target.value);
-  };
+  const todoNameElement=useRef();
+  const dueDateElement=useRef();
 
-  const handleDateChange = (event) => {
-    setDueDate(event.target.value);
-  };
-
-  const handleAddBUttonClicked = () => {
+  const handleAddBUttonClicked = (event) => {
+    event.preventDefault();
+    const todoName=todoNameElement.current.value;
+    const dueDate=dueDateElement.current.value;
+    todoNameElement.current.value="";
+    dueDateElement.current.value="";
+    console.log(`${todoName} due on : ${dueDate}`);
     onNewItem(todoName, dueDate);
-    setDueDate("");
-    setTodoName("");
   };
 
   return (
     <div className="container">
       <div className="row justify-content-center mb-4">
-        <div className="col-md-5 mb-2">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter Todo Here"
-            value={todoName}
-            onChange={handleNameChange}
-          />
-        </div>
-        <div className="col-md-4 mb-2">
-          <input
-            type="date"
-            className="form-control"
-            value={dueDate}
-            onChange={handleDateChange}
-          />
-        </div>
-        <div className="col-md-2 mb-2">
-          <button
-            type="button"
-            className="btn btn-success w-100"
-            onClick={handleAddBUttonClicked}
-          >
-            Add
-          </button>
-        </div>
+    
+        <form  onSubmit={handleAddBUttonClicked}>
+          <div className="col-md-5 mb-2">
+            <input
+              type="text"
+              ref={todoNameElement}
+              className="form-control"
+              placeholder="Enter Todo Here"
+            />
+          </div>
+          <div className="col-md-4 mb-2">
+            <input
+              type="date"
+              ref={dueDateElement}
+              className="form-control"
+            />
+          </div>
+          <div className="col-md-2 mb-2">
+            <button
+            type="submit"
+              className="btn btn-success w-100"
+            >
+              <BiMessageAdd />
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

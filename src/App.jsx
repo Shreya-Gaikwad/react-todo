@@ -1,5 +1,5 @@
 import AppName from "./components/AppName";
-import AddTodo from "./components/AddTodo";
+import AddTodo from "./components/AddToDo";
 import TodoItems from "./components/TodoItems";
 import WelcomeMessage from "./components/WelcomeMessage";
 import "./App.css";
@@ -31,11 +31,12 @@ function App() {
 
   const handleNewItem=(itemName, itemDueDate)=>{
     console.log(`New item added: ${itemName} Date: ${itemDueDate}`);
-    const newTodoItems=[...todoItems,{
-        name:itemName,
-        dueDate:itemDueDate
-      },];
-    setTodoItems(newTodoItems);
+  
+    setTodoItems((currentValue)=> 
+        [...currentValue,
+        {name:itemName,
+        dueDate:itemDueDate}
+      ]);
   };
 
   const handleDeleteItem=(todoItemName)=>{
